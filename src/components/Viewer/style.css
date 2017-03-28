@@ -1,0 +1,34 @@
+.Viewer {
+  flex: 5 1;
+  overflow: auto;
+  padding: 20px;
+}
+
+.viewer-title {
+  font-family: 'Fira Sans Condensed', sans-serif;
+  font-size: 30px;
+  font-weight: 900;
+}
+
+.viewer-author {
+  padding: 5px;
+
+  font-family: 'Fira Sans Condensed', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.viewer-content {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  color: #444;
+}
+
+.viewer-content img {
+  max-width: 100%;
+}
+
+.viewer-content figcaption {
+  font-size: 12px;
+}
+

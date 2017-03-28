@@ -1,0 +1,43 @@
+.commentItem {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+
+  color: #222;
+  border: 1px dashed gray;
+}
+
+.comment-author {
+  display: flex;
+  align-items: center;
+  height: 20px;
+  width: 100%;
+  padding: 0 0 0 5px;
+
+  color: white;
+  background-color: gray;
+  font-family: 'Fira Sans Condensed', sans-serif;
+  font-weight: lighter;
+  font-size: 12px;
+}
+
+.comment-content {
+  padding: 5px;
+
+  font-size: 12px;
+
+  color: #444444;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.comment-sub-size {
+  display:flex;
+  justify-content: center;
+  height: 20px;
+  width: 100%;
+
+  color: gray;
+  font-family: 'Fira Sans Condensed', sans-serif;
+  font-weight: lighter;
+  font-size: 14px;
+}

@@ -1,0 +1,23 @@
+.storyItem {
+  padding: 10px;
+  margin: 0 1px 0 0;
+
+  border: 1px dashed salmon;
+  color: #222;
+  font-family: 'Fira Sans Condensed', sans-serif;
+}
+
+.story-title {
+  font-weight: medium;
+}
+
+.story-by {
+  margin: 0 0 0 5px;
+  padding: 0 0 0 5px;
+
+  font-size: 12px;
+  font-weight: lighter;
+
+  border-left: 2px solid salmon;
+  color: #444444;
+}

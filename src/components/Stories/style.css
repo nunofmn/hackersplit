@@ -1,0 +1,17 @@
+.Story {
+  flex: 4 1;
+  overflow: auto;
+}
+
+.Story > img {
+  max-width: 100%;
+}
+
+.Stories {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+  border: 1px solid salmon;
+  list-style: none;
+}
