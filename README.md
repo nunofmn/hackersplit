@@ -1,7 +1,6 @@
 # Hackersplit
 ## HackerNew split-based viewer
-
-## Available Scripts
+![app-screenshot](https://cloud.githubusercontent.com/assets/1160976/24415572/ca5653e2-13d9-11e7-8e12-350d40bb1753.png)
 
 In the project directory, you can run:
 
