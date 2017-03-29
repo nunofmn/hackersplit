@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import './style.css';
-import CommentItem from '../CommentItem/index.js';
+import CommentItem from '../../components/CommentItem/index.js';
 import data from '../../data/comments';
 
 class Comments extends Component {
