@@ -13,7 +13,6 @@ class App extends Component {
         <div className="AppNavigation">
           <Stories />
           <Viewer />
-          <Comments />
         </div>
       </div>
     );

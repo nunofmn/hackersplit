@@ -8,6 +8,10 @@ import StoryList from '../../components/StoryList/index';
 
 class Stories extends Component {
 
+  clickStory(storyId) {
+    this.props.actions.selectStory(storyId);
+  }
+
   componentDidMount() {
     this.props.actions.fetchTopStories();
   }
@@ -16,7 +20,7 @@ class Stories extends Component {
     const { stories } = this.props;
     return (
       <div className="Story">
-        <StoryList stories={stories.items} />
+        <StoryList stories={stories.items} clickStory={this.clickStory.bind(this)}/>
       </div>
     );
   }

@@ -1,4 +1,4 @@
-const API_ENDPOINT = 'http://localhost:8000/api/';
+const API_ENDPOINT = 'http://localhost:8000/api/story';
 
 // Actions
 const REQUEST_STORY_CONTENT = 'hackersplit/content/REQUEST_STORY_CONTENT';
@@ -15,7 +15,8 @@ export default function reducer(state = {
       return {
         ...state,
         isFetching: true,
-        isFetchingId: action.storyId
+        isFetchingId: action.storyId,
+        content: {}
       };
 
     case RECEIVE_STORY_CONTENT:
@@ -52,6 +53,6 @@ export function fetchStoryContent(storyId) {
 
     return fetch(`${API_ENDPOINT}/${storyId}/content`)
       .then(response => response.json())
-      .then(json => dispatch(receiveContent));
+      .then(json => dispatch(receiveContent(json)));
   };
 };

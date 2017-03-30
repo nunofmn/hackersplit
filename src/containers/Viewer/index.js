@@ -10,12 +10,20 @@ import './style.css';
 
 class Viewer extends Component {
 
+  componentDidUpdate(prevProps) {
+    const { currentStory, actions } = this.props;
+
+    if(currentStory !== '' && prevProps.currentStory !== currentStory) {
+      actions.fetchStoryContent(currentStory);
+    }
+  }
+
   render() {
     const { content } = this.props.content;
 
     return (
       <div className="Viewer">
-        { !isEmpty(content) ? <ViewerContent content={content} /> : null }
+        { !isEmpty(content) ? <ViewerContent article={content} /> : null }
       </div>
     );
   }
@@ -23,6 +31,7 @@ class Viewer extends Component {
 
 function mapStateToProps(state) {
   return {
+    currentStory: state.stories.currentStory,
     content: state.content
   };
 };
