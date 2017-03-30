@@ -1,30 +1,39 @@
 import React, { Component } from 'react';
-import DOMPurify from 'dompurify';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import isEmpty from 'lodash.isempty';
+
+import * as ContentActions from '../../ducks/content';
+import ViewerContent from '../../components/ViewerContent/index';
 
 import './style.css';
-import article from '../../data/article';
 
 class Viewer extends Component {
+
   render() {
-    const articleHtml = {
-      __html: DOMPurify.sanitize(article.content)
-    };
+    const { content } = this.props.content;
 
     return (
       <div className="Viewer">
-        <div className="viewer-title">
-          {article.title}
-        </div>
-        <div className="viewer-author">
-          by {article.author}
-        </div>
-        <div
-          className="viewer-content"
-          dangerouslySetInnerHTML={articleHtml}>
-        </div>
+        { !isEmpty(content) ? <ViewerContent content={content} /> : null }
       </div>
     );
   }
 }
 
-export default Viewer;
+function mapStateToProps(state) {
+  return {
+    content: state.content
+  };
+};
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(ContentActions, dispatch)
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Viewer);
