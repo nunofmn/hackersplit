@@ -1,4 +1,4 @@
-const API_ENDPOINT = 'http://localhost:8000/api/story';
+const API_ENDPOINT = process.env.REACT_APP_API_URL;
 
 // Actions
 const REQUEST_STORY_CONTENT = 'hackersplit/content/REQUEST_STORY_CONTENT';
@@ -51,7 +51,7 @@ export function fetchStoryContent(storyId) {
   return dispatch => {
     dispatch(requestContent());
 
-    return fetch(`${API_ENDPOINT}/${storyId}/content`)
+    return fetch(`${API_ENDPOINT}/story/${storyId}/content`)
       .then(response => response.json())
       .then(json => dispatch(receiveContent(json)));
   };

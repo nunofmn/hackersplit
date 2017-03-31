@@ -138,4 +138,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Build dir
+build/
+
 # End of https://www.gitignore.io/api/node,osx,windows,linux,vim

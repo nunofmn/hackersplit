@@ -1,4 +1,4 @@
-const API_ENDPOINT = 'http://localhost:8000/api';
+const API_ENDPOINT = process.env.REACT_APP_API_URL;
 
 // Actions
 const REQUEST_COMMENTS_BY_STORY = 'hackersplit/comments/REQUEST_COMMENTS_BY_STORY';
