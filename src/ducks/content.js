@@ -2,7 +2,7 @@ const API_ENDPOINT = 'http://localhost:8000/api/story';
 
 // Actions
 const REQUEST_STORY_CONTENT = 'hackersplit/content/REQUEST_STORY_CONTENT';
-const RECEIVE_STORY_CONTENT = 'hackersplit/stories/RECEIVE_STORY_CONTENT';
+const RECEIVE_STORY_CONTENT = 'hackersplit/content/RECEIVE_STORY_CONTENT';
 
 // Reducer
 export default function reducer(state = {

@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import isEmpty from 'lodash.isempty';
+
+import * as CommentsActions from '../../ducks/comments';
+import CommentList from '../../components/CommentList/index';
 
 import './style.css';
-import CommentItem from '../../components/CommentItem/index.js';
-import data from '../../data/comments';
 
 class Comments extends Component {
 
@@ -10,17 +14,39 @@ class Comments extends Component {
     return ('kids' in comment) ? comment.kids : [];
   }
 
+  componentDidUpdate(prevProps) {
+    const { currentStory, actions } = this.props;
+
+    if(currentStory !== '' && prevProps.currentStory !== currentStory) {
+      actions.fetchStoryComments(currentStory);
+    }
+  }
+
   render() {
+    const { comments } = this.props.comments;
+
     return (
       <div className="CommentSection">
-        <ul className="Comments">
-          {data.map((comment) => {
-            return <CommentItem key={comment.id} author={comment.by} content={comment.text} subComments={this.getSubComments(comment)} />;
-          })}
-        </ul>
+        { !isEmpty(comments) ? <CommentList comments={comments} /> : null }
       </div>
     );
   }
 }
 
-export default Comments;
+function mapStateToProps(state) {
+  return {
+    currentStory: state.stories.currentStory,
+    comments: state.comments
+  };
+};
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(CommentsActions, dispatch)
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Comments);
