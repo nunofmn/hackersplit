@@ -2,15 +2,19 @@ import React from 'react';
 import DOMPurify from 'dompurify';
 
 import './style.css';
+import CommentList from '../CommentList/index';
 
-const CommentItem = ({content, author, subComments}) => {
-  const contentHtml =  { __html: DOMPurify.sanitize(content) };
+const CommentItem = ({comment}) => {
+  const { by, text } = comment;
+
+  const comments = 'comments' in comment ? comment.comments : [];
+  const contentHtml =  { __html: DOMPurify.sanitize(text) };
 
   return (
     <li className="commentItem">
-      <div className="comment-author">{author}</div>
+      <div className="comment-author">{by}</div>
       <div className="comment-content" dangerouslySetInnerHTML={contentHtml}></div>
-    <div className="comment-sub-size">• View {subComments.length} subcomments •</div>
+      <CommentList comments={comments} />
     </li>
   );
 }
