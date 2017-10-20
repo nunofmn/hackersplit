@@ -1,11 +1,11 @@
-const API_ENDPOINT = process.env.REACT_APP_API_URL;
+const API_ENDPOINT = process.env.REACT_APP_API_URL
 
 // Actions
-const REQUEST_STORY_CONTENT = 'hackersplit/content/REQUEST_STORY_CONTENT';
-const RECEIVE_STORY_CONTENT = 'hackersplit/content/RECEIVE_STORY_CONTENT';
+const REQUEST_STORY_CONTENT = 'hackersplit/content/REQUEST_STORY_CONTENT'
+const RECEIVE_STORY_CONTENT = 'hackersplit/content/RECEIVE_STORY_CONTENT'
 
 // Reducer
-export default function reducer(state = {
+export default function reducer (state = {
   isFetching: false,
   isFetchingId: -1,
   content: {}
@@ -17,7 +17,7 @@ export default function reducer(state = {
         isFetching: true,
         isFetchingId: action.storyId,
         content: {}
-      };
+      }
 
     case RECEIVE_STORY_CONTENT:
       return {
@@ -25,34 +25,34 @@ export default function reducer(state = {
         isFetching: false,
         isFetchingId: -1,
         content: action.content
-      };
+      }
 
     default:
-      return state;
+      return state
   }
 };
 
 // Action Creators
-function receiveContent(data) {
+function receiveContent (data) {
   return {
     type: RECEIVE_STORY_CONTENT,
     content: data
-  };
+  }
 };
 
-function requestContent(storyId) {
+function requestContent (storyId) {
   return {
     type: REQUEST_STORY_CONTENT,
     storyId
-  };
+  }
 };
 
-export function fetchStoryContent(storyId) {
+export function fetchStoryContent (storyId) {
   return dispatch => {
-    dispatch(requestContent());
+    dispatch(requestContent())
 
     return fetch(`${API_ENDPOINT}/story/${storyId}/content`)
       .then(response => response.json())
-      .then(json => dispatch(receiveContent(json)));
-  };
+      .then(json => dispatch(receiveContent(json)))
+  }
 };

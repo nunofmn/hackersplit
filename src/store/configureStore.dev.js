@@ -1,20 +1,20 @@
-import { createStore, applyMiddleware } from 'redux';
-import { createLogger } from 'redux-logger';
-import thunk from 'redux-thunk';
+import { createStore, applyMiddleware } from 'redux'
+import { createLogger } from 'redux-logger'
+import thunk from 'redux-thunk'
 
-import rootReducer from '../reducer';
+import rootReducer from '../reducer'
 
-export default function configure(initialState) {
+export default function configure (initialState) {
   const create = window.devToolsExtension
     ? window.devToolsExtension()(createStore)
-    : createStore;
+    : createStore
 
   const createStoreWithMiddleware = applyMiddleware(
       thunk,
       createLogger()
-    )(create);
+    )(create)
 
-  const store = createStoreWithMiddleware(rootReducer, initialState);
+  const store = createStoreWithMiddleware(rootReducer, initialState)
 
-  return store;
+  return store
 }

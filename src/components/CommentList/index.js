@@ -1,21 +1,20 @@
-import React from 'react';
+import React from 'react'
 
-import './style.css';
-import CommentItem from '../CommentItem/index';
+import './style.css'
+import CommentItem from '../CommentItem/index'
 
 const isDeleted = (comment) => {
-  return 'deleted' in comment && comment.deleted;
-};
+  return 'deleted' in comment && comment.deleted
+}
 
 const CommentList = ({comments}) => {
   return (
-    <ul className="Comments">
+    <ul className='Comments'>
       {comments.map((comment) => {
-        return !isDeleted(comment) ? <CommentItem key={comment.id} comment={comment} /> : null;
+        return !isDeleted(comment) ? <CommentItem key={comment.id} comment={comment} /> : null
       })}
     </ul>
-  );
+  )
 }
 
-
-export default CommentList;
+export default CommentList

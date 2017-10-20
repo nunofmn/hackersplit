@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import './style.css';
+import React, { Component } from 'react'
+import './style.css'
 
 class Header extends Component {
-  render() {
+  render () {
     return (
-      <div className="Header">
-        <h3 className="title">HackerSplit</h3>
+      <div className='Header'>
+        <h3 className='title'>HackerSplit</h3>
       </div>
-    );
+    )
   }
 }
 
-export default Header;
+export default Header

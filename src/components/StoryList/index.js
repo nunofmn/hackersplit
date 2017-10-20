@@ -1,11 +1,11 @@
-import React from 'react';
+import React from 'react'
 
-import './style.css';
-import StoryItem from '../StoryItem/index';
+import './style.css'
+import StoryItem from '../StoryItem/index'
 
 const StoryList = ({stories, clickStory}) => {
   return (
-    <ul className="Stories">
+    <ul className='Stories'>
       {stories.map((story) => {
         return (
           <StoryItem
@@ -14,10 +14,10 @@ const StoryList = ({stories, clickStory}) => {
             title={story.title}
             by={story.by}
             onClick={clickStory} />
-        );
+        )
       })}
     </ul>
-  );
+  )
 }
 
-export default StoryList;
+export default StoryList
