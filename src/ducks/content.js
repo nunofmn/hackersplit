@@ -1,14 +1,16 @@
-const API_ENDPOINT = process.env.REACT_APP_API_URL
+import { API_REQUEST } from '../constants/actionTypes'
 
 // Actions
 const REQUEST_STORY_CONTENT = 'hackersplit/content/REQUEST_STORY_CONTENT'
 const RECEIVE_STORY_CONTENT = 'hackersplit/content/RECEIVE_STORY_CONTENT'
+const ERROR_RECEIVE_STORY_CONTENT = 'hackersplit/content/ERROR_RECEIVE_STORY_CONTENT'
 
 // Reducer
 export default function reducer (state = {
   isFetching: false,
   isFetchingId: -1,
-  content: {}
+  content: {},
+  error: null
 }, action = {}) {
   switch (action.type) {
     case REQUEST_STORY_CONTENT:
@@ -16,7 +18,8 @@ export default function reducer (state = {
         ...state,
         isFetching: true,
         isFetchingId: action.storyId,
-        content: {}
+        content: {},
+        error: null
       }
 
     case RECEIVE_STORY_CONTENT:
@@ -24,35 +27,38 @@ export default function reducer (state = {
         ...state,
         isFetching: false,
         isFetchingId: -1,
-        content: action.content
+        content: action.response
+      }
+
+    case ERROR_RECEIVE_STORY_CONTENT:
+      return {
+        ...state,
+        isFetching: false,
+        isFetchingId: -1,
+        content: {},
+        error: action.error
       }
 
     default:
       return state
   }
-};
+}
 
 // Action Creators
-function receiveContent (data) {
-  return {
-    type: RECEIVE_STORY_CONTENT,
-    content: data
-  }
-};
+export const requestContent = (storyId) => ({
+  type: REQUEST_STORY_CONTENT,
+  storyId
+})
 
-function requestContent (storyId) {
-  return {
-    type: REQUEST_STORY_CONTENT,
-    storyId
+export const fetchStoryContent = (storyId) => ({
+  type: API_REQUEST,
+  payload: {
+    endpoint: `story/${storyId}/content`,
+    method: 'GET',
+    types: [
+      requestContent(storyId),
+      RECEIVE_STORY_CONTENT,
+      ERROR_RECEIVE_STORY_CONTENT
+    ]
   }
-};
-
-export function fetchStoryContent (storyId) {
-  return dispatch => {
-    dispatch(requestContent())
-
-    return fetch(`${API_ENDPOINT}/story/${storyId}/content`)
-      .then(response => response.json())
-      .then(json => dispatch(receiveContent(json)))
-  }
-};
+})
