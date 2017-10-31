@@ -1,11 +1,11 @@
 // Actions
 import { API_REQUEST } from '../constants/actionTypes'
 
-const REQUEST_TOP_STORIES = 'hackersplit/stories/REQUEST_TOP_STORIES'
-const RECEIVE_TOP_STORIES = 'hackersplit/stories/RECEIVE_TOP_STORIES'
-const ERROR_RECEIVE_TOP_STORIES = 'hackersplit/stories/ERROR_RECEIVE_TOP_STORIES'
+export const REQUEST_TOP_STORIES = 'hackersplit/stories/REQUEST_TOP_STORIES'
+export const RECEIVE_TOP_STORIES = 'hackersplit/stories/RECEIVE_TOP_STORIES'
+export const ERROR_RECEIVE_TOP_STORIES = 'hackersplit/stories/ERROR_RECEIVE_TOP_STORIES'
 
-const SELECT_STORY = 'hackersplit/stories/SELECT_STORY'
+export const SELECT_STORY = 'hackersplit/stories/SELECT_STORY'
 
 // Reducer
 export default function reducer (state = {

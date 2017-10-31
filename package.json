@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "deep-freeze": "0.0.1",
     "dompurify": "^0.8.5",
     "lodash.isempty": "^4.4.0",
     "react": "^15.4.2",
@@ -24,7 +25,16 @@
     "eject": "react-scripts eject"
   },
   "standard": {
-    "globals": [ "fetch", "describe", "it", "afterEach", "before", "beforeEach", "jest", "expect"]
+    "globals": [
+      "fetch",
+      "describe",
+      "it",
+      "afterEach",
+      "before",
+      "beforeEach",
+      "jest",
+      "expect"
+    ]
   },
   "proxy": "http://localhost:8000"
 }
