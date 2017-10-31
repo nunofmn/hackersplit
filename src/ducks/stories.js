@@ -11,13 +11,15 @@ const SELECT_STORY = 'hackersplit/stories/SELECT_STORY'
 export default function reducer (state = {
   isFetching: false,
   items: [],
-  currentStory: ''
+  currentStory: '',
+  error: null
 }, action = {}) {
   switch (action.type) {
     case REQUEST_TOP_STORIES:
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
+        error: null
       }
 
     case RECEIVE_TOP_STORIES:
@@ -25,6 +27,14 @@ export default function reducer (state = {
         ...state,
         isFetching: false,
         items: action.response
+      }
+
+    case ERROR_RECEIVE_TOP_STORIES:
+      return {
+        ...state,
+        isFetching: false,
+        items: [],
+        error: action.error
       }
 
     case SELECT_STORY:
