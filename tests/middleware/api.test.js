@@ -7,26 +7,44 @@ const PRE_REQUEST = 'hackersplit/api-test/pre-request'
 const SUCCESS_REQUEST = 'hackersplit/api-test/success-request'
 const FAILURE_REQUEST = 'hackersplit/api-test/failure-request'
 
-const apiAction = {
+const preRequest = () => ({ type: PRE_REQUEST })
+const successRequest = (data) => (
+  {
+    type: SUCCESS_REQUEST,
+    payload: { data }
+  }
+)
+const failureRequest = (errorInfo) => (
+  {
+    type: FAILURE_REQUEST,
+    error: true,
+    payload: {
+      error: errorInfo
+    }
+  }
+)
+
+const apiActionMock = () => ({
   type: API_REQUEST,
   payload: {
     endpoint: 'fake',
     method: 'GET',
     types: [
-      PRE_REQUEST,
-      SUCCESS_REQUEST,
-      FAILURE_REQUEST
-    ]
+      preRequest,
+      successRequest,
+      failureRequest
+    ].map(type => jest.fn(type))
   }
-}
+})
 
 describe('Middleware - API', () => {
-  let next, dispatch, middleware
+  let next, dispatch, middleware, apiAction
 
   beforeEach(() => {
     next = jest.fn()
     dispatch = jest.fn()
     middleware = apiMiddleware({ dispatch })(next)
+    apiAction = apiActionMock()
   })
 
   afterEach(fetchMock.restore)
@@ -46,9 +64,15 @@ describe('Middleware - API', () => {
 
     await middleware(apiAction)
 
+    const preRequestMockCalls = apiAction.payload.types[0].calls[0][0]
+
     expect(dispatch.mock.calls.length).toBe(2)
-    expect(dispatch.mock.calls[0]).toEqual([{ type: PRE_REQUEST }])
+    expect(dispatch.mock.calls[0][0]).toEqual(preRequest())
+
+    expect(preRequestMockCalls.mock.calls.length).toBe(1)
+
     expect(next.mock.calls.length).toBe(0)
+
     expect(fetchMock.called()).toBeTruthy()
   })
 
@@ -59,9 +83,16 @@ describe('Middleware - API', () => {
 
     await middleware(apiAction)
 
+    const successRequestMockCalls = apiAction.payload.types[1].calls
+
     expect(dispatch.mock.calls.length).toBe(2)
-    expect(dispatch.mock.calls[1]).toEqual([{ type: SUCCESS_REQUEST, response }])
+    expect(dispatch.mock.calls[1][0]).toEqual(successRequest(response))
+
+    expect(successRequestMockCalls.length).toBe(1)
+    expect(successRequestMockCalls[0][0]).toEqual(response)
+
     expect(next.mock.calls.length).toBe(0)
+
     expect(fetchMock.called()).toBeTruthy()
   })
 
@@ -72,9 +103,17 @@ describe('Middleware - API', () => {
 
     await middleware(apiAction)
 
+    const failureRequestMockCalls = apiAction.payload.types[2].mock.calls
+    const errorResponse = new Error('API returned 400 code')
+
     expect(dispatch.mock.calls.length).toBe(2)
-    expect(dispatch.mock.calls[1]).toEqual([{ type: FAILURE_REQUEST, error: response.status }])
+    expect(dispatch.mock.calls[1][0]).toEqual(failureRequest(errorResponse))
+
+    expect(failureRequestMockCalls.length).toBe(1)
+    expect(failureRequestMockCalls[0][0]).toEqual(errorResponse)
+
     expect(next.mock.calls.length).toBe(0)
+
     expect(fetchMock.called()).toBeTruthy()
   })
 })

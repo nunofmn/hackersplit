@@ -1,7 +1,10 @@
 import deepFreeze from 'deep-freeze'
 
-import reducer from '../src/ducks/stories'
-import {
+import reducer, {
+  requestTopStories,
+  receiveTopStories,
+  errorReceiveTopStories,
+  selectStory,
   REQUEST_TOP_STORIES,
   RECEIVE_TOP_STORIES,
   ERROR_RECEIVE_TOP_STORIES,
@@ -22,7 +25,7 @@ describe('stories reducer', () => {
     expect(reducer(undefined, {})).toEqual(expected)
   })
 
-  it('should handle REQUEST_TOP_STORIES', () => {
+  it('should handle REQUEST_TOP_STORIES action', () => {
     const baseState = reducer(deepFreeze(initialState), { type: REQUEST_TOP_STORIES })
 
     const expected = {
@@ -34,13 +37,15 @@ describe('stories reducer', () => {
     expect(baseState).toEqual(expected)
   })
 
-  it('should handle RECEIVE_TOP_STORIES', () => {
+  it('should handle RECEIVE_TOP_STORIES action', () => {
     const action = {
       type: RECEIVE_TOP_STORIES,
-      response: [
-        { by: 'author1', title: 'Fake News' },
-        { by: 'author2', title: 'Fake News' }
-      ]
+      payload: {
+        stories: [
+          { by: 'author1', title: 'Fake News' },
+          { by: 'author2', title: 'Fake News' }
+        ]
+      }
     }
 
     const baseState = reducer(deepFreeze(initialState), action)
@@ -48,7 +53,7 @@ describe('stories reducer', () => {
     const expected = {
       ...initialState,
       isFetching: false,
-      items: action.response
+      items: action.payload.stories
     }
 
     expect(baseState).toEqual(expected)
@@ -57,7 +62,8 @@ describe('stories reducer', () => {
   it('should handle ERROR_RECEIVE_TOP_STORIES', () => {
     const action = {
       type: ERROR_RECEIVE_TOP_STORIES,
-      error: 400
+      error: true,
+      payload: new Error('Error test.')
     }
 
     const baseState = reducer(deepFreeze(initialState), action)
@@ -66,7 +72,7 @@ describe('stories reducer', () => {
       ...initialState,
       isFetching: false,
       items: [],
-      error: action.error
+      error: action.payload.error
     }
 
     expect(baseState).toEqual(expected)
@@ -75,14 +81,16 @@ describe('stories reducer', () => {
   it('should handle SELECT_STORY', () => {
     const action = {
       type: SELECT_STORY,
-      storyId: 1
+      payload: {
+        storyId: 1
+      }
     }
 
     const baseState = reducer(deepFreeze(initialState), action)
 
     const expected = {
       ...initialState,
-      currentStory: action.storyId
+      currentStory: action.payload.storyId
     }
 
     expect(baseState).toEqual(expected)

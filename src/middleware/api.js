@@ -14,19 +14,20 @@ const apiMiddleware = ({ dispatch }) => next => async (action) => {
     failureAction
   ] = payload.types
 
-  dispatch({ type: beforeAction })
+  dispatch(beforeAction())
 
   try {
     const response = await fetch(`${API_ENDPOINT}/${payload.endpoint}`)
 
     if (response.ok) {
       const json = await response.json()
-      dispatch({ type: successAction, response: json })
+      dispatch(successAction(json))
     } else {
-      dispatch({ type: failureAction, error: response.status })
+      const error = new Error(`API returned ${response.status} code`)
+      dispatch(failureAction(error))
     }
   } catch (error) {
-    dispatch({ type: failureAction, error })
+    dispatch(failureAction(error))
   }
 }
 

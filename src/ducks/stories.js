@@ -26,7 +26,7 @@ export default function reducer (state = {
       return {
         ...state,
         isFetching: false,
-        items: action.response
+        items: action.payload.stories
       }
 
     case ERROR_RECEIVE_TOP_STORIES:
@@ -34,13 +34,13 @@ export default function reducer (state = {
         ...state,
         isFetching: false,
         items: [],
-        error: action.error
+        error: action.payload.error
       }
 
     case SELECT_STORY:
       return {
         ...state,
-        currentStory: action.storyId
+        currentStory: action.payload.storyId
       }
 
     default:
@@ -52,9 +52,28 @@ export default function reducer (state = {
 export const selectStory = (storyId) => {
   return {
     type: SELECT_STORY,
-    storyId
+    payload: {
+      storyId
+    }
   }
 }
+
+export const requestTopStories = () => ({
+  type: SELECT_STORY
+})
+
+export const receiveTopStories = (stories) => ({
+  type: RECEIVE_TOP_STORIES,
+  payload: {
+    stories
+  }
+})
+
+export const errorReceiveTopStories = (error) => ({
+  type: ERROR_RECEIVE_TOP_STORIES,
+  error: true,
+  payload: error
+})
 
 export const fetchTopStories = () => ({
   type: API_REQUEST,
@@ -62,9 +81,9 @@ export const fetchTopStories = () => ({
     endpoint: 'topstories',
     method: 'GET',
     types: [
-      REQUEST_TOP_STORIES,
-      RECEIVE_TOP_STORIES,
-      ERROR_RECEIVE_TOP_STORIES
+      requestTopStories,
+      receiveTopStories,
+      errorReceiveTopStories
     ]
   }
 })
