@@ -5,11 +5,14 @@ import reducer, {
   receiveTopStories,
   errorReceiveTopStories,
   selectStory,
+  fetchTopStories,
   REQUEST_TOP_STORIES,
   RECEIVE_TOP_STORIES,
   ERROR_RECEIVE_TOP_STORIES,
   SELECT_STORY
 } from '../src/ducks/stories'
+
+import { API_REQUEST } from '../src/constants/actionTypes'
 
 describe('stories reducer', () => {
   const initialState = reducer({}, {})
@@ -59,7 +62,7 @@ describe('stories reducer', () => {
     expect(baseState).toEqual(expected)
   })
 
-  it('should handle ERROR_RECEIVE_TOP_STORIES', () => {
+  it('should handle ERROR_RECEIVE_TOP_STORIES action', () => {
     const action = {
       type: ERROR_RECEIVE_TOP_STORIES,
       error: true,
@@ -78,7 +81,7 @@ describe('stories reducer', () => {
     expect(baseState).toEqual(expected)
   })
 
-  it('should handle SELECT_STORY', () => {
+  it('should handle SELECT_STORY action', () => {
     const action = {
       type: SELECT_STORY,
       payload: {
@@ -94,5 +97,69 @@ describe('stories reducer', () => {
     }
 
     expect(baseState).toEqual(expected)
+  })
+})
+
+describe('stories action creators', () => {
+  it('should create a action to select the story', () => {
+    const expected = {
+      type: SELECT_STORY,
+      payload: {
+        storyId: 1
+      }
+    }
+
+    expect(selectStory(1)).toEqual(expected)
+  })
+
+  it('should create a action to request the stories', () => {
+    const expected = {
+      type: REQUEST_TOP_STORIES
+    }
+
+    expect(requestTopStories()).toEqual(expected)
+  })
+
+  it('should create a action to receive the stories', () => {
+    const stories = [
+      { by: 'author1', title: 'Fake News' },
+      { by: 'author2', title: 'Fake News' }
+    ]
+    const expected = {
+      type: RECEIVE_TOP_STORIES,
+      payload: {
+        stories
+      }
+    }
+
+    expect(receiveTopStories(stories)).toEqual(expected)
+  })
+
+  it('should create a action to inform error in fetching stories', () => {
+    const error = new Error('Error test.')
+    const expected = {
+      type: ERROR_RECEIVE_TOP_STORIES,
+      error: true,
+      payload: error
+    }
+
+    expect(errorReceiveTopStories(error)).toEqual(expected)
+  })
+
+  it('should create a action to perform a API request', () => {
+    const expected = {
+      type: API_REQUEST,
+      payload: {
+        endpoint: 'topstories',
+        method: 'GET',
+        types: [
+          requestTopStories,
+          receiveTopStories,
+          errorReceiveTopStories
+        ]
+      }
+    }
+
+    expect(fetchTopStories()).toEqual(expected)
   })
 })
