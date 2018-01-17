@@ -64,12 +64,12 @@ describe('Middleware - API', () => {
 
     await middleware(apiAction)
 
-    const preRequestMockCalls = apiAction.payload.types[0].calls[0][0]
+    const preRequestMockCalls = apiAction.payload.types[0].mock.calls
 
     expect(dispatch.mock.calls.length).toBe(2)
     expect(dispatch.mock.calls[0][0]).toEqual(preRequest())
 
-    expect(preRequestMockCalls.mock.calls.length).toBe(1)
+    expect(preRequestMockCalls.length).toBe(1)
 
     expect(next.mock.calls.length).toBe(0)
 
@@ -83,7 +83,7 @@ describe('Middleware - API', () => {
 
     await middleware(apiAction)
 
-    const successRequestMockCalls = apiAction.payload.types[1].calls
+    const successRequestMockCalls = apiAction.payload.types[1].mock.calls
 
     expect(dispatch.mock.calls.length).toBe(2)
     expect(dispatch.mock.calls[1][0]).toEqual(successRequest(response))

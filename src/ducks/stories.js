@@ -59,7 +59,7 @@ export const selectStory = (storyId) => {
 }
 
 export const requestTopStories = () => ({
-  type: SELECT_STORY
+  type: REQUEST_TOP_STORIES
 })
 
 export const receiveTopStories = (stories) => ({
