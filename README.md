@@ -1,8 +1,9 @@
 # Hackersplit (WIP)
-> A simple HN split-based viewer with keyboard navigation.   
+> A simple HN split-based viewer with keyboard navigation.  
+
 ![app-screenshot](https://cloud.githubusercontent.com/assets/1160976/24415572/ca5653e2-13d9-11e7-8e12-350d40bb1753.png)
 
-## ## Getting started
+## Getting started
 Install all project dependencies by executing and quickstart the application by running:
 
 ```shell
